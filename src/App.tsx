@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoItem from './components/TodoItem/TodoItem'
+import { useTodos } from './context/todoList-context'
+import { TodoFilterTypes, TodoType } from './types/types'
+import TodoForm from './components/TodoForm/TodoForm'
+import { useEffect, useState } from 'react'
+import { Button, ButtonGroup } from 'react-bootstrap'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    const { filterTodos } = useTodos()
+    const [todosFilter, setTodosFilter] = useState<TodoFilterTypes>('ALL_TODOS')
+    const [visibleTodos, setVisibleTodos] = useState<Array<TodoType>>([])
+
+    useEffect(() => {
+        setVisibleTodos(filterTodos(todosFilter))
+    }, [filterTodos, todosFilter])
+
+    return <div className="container">
+        <TodoForm/>
+        {visibleTodos.map(todo => <TodoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.text}
+            completed={todo.completed}
+        />)}
+        <ButtonGroup>
+            <Button
+                variant="secondary"
+                onClick={() => setTodosFilter('ACTIVE_TODOS')}
+            >Show active todos</Button>
+            <Button
+                className="mx-3"
+                variant="secondary"
+                onClick={() => setTodosFilter('COMPLETED_TODOS')}
+            >Show completed todos</Button>
+            <Button
+                variant="secondary"
+                onClick={() => setTodosFilter('ALL_TODOS')}
+            >Show all todos</Button>
+        </ButtonGroup>
     </div>
-  );
 }
 
-export default App;
+export default App
