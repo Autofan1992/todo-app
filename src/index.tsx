@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
-import { TodosProvider } from './context/todoList-context'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
+import reportWebVitals from './reportWebVitals'
+import { TodosProvider } from './context/todos-context'
+import AppContainer from './components/App/AppContainer'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <TodosProvider>
-            <App/>
+            <AppContainer/>
         </TodosProvider>
     </React.StrictMode>
 )

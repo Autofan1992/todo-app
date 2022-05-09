@@ -1,6 +1,6 @@
 export type TodoType = {
     id: string
-    text: string
+    title: string
     completed: boolean
 }
 

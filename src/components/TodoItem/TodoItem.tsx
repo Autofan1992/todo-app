@@ -1,40 +1,67 @@
 import { TodoType } from '../../types/types'
-import { useTodos } from '../../context/todoList-context'
-import { Button, Form, ListGroup } from 'react-bootstrap'
-import { useRef, useState } from 'react'
-import useOutsideClick from '../../hooks/useOutsideClick'
-import PencilIcon from '../Icons/PencilIcon'
-import TrashIcon from '../Icons/TrashIcon'
+import { Button, Form } from 'react-bootstrap'
+import PencilIcon from '../common/Icons/PencilIcon'
+import TrashIcon from '../common/Icons/TrashIcon'
+import React, { Dispatch, RefObject, SetStateAction } from 'react'
+import { useTodos } from '../../context/todos-context'
 
-const TodoItem = ({ text, completed, id }: TodoType) => {
-    const { editTodo, deleteTodo } = useTodos()
-    const listItemRef = useRef<HTMLAnchorElement>(null)
-    const [editMode, setEditMode] = useState(false)
+type PropsType = {
+    handleCompleted: () => void
+    handleTextUpdate: (title: string) => void
+    editMode: boolean
+    setEditMode: Dispatch<SetStateAction<boolean>>
+    listItemRef: RefObject<HTMLDivElement>
+}
 
-    useOutsideClick(listItemRef, setEditMode)
+const TodoItem = (
+    {
+        title,
+        completed,
+        id,
+        handleCompleted,
+        handleTextUpdate,
+        setEditMode,
+        editMode,
+        listItemRef
+    }: TodoType & PropsType) => {
+    const { deleteTodo } = useTodos()
 
-    return <ListGroup.Item ref={listItemRef}>
-        <div className="d-flex align-items-end">
-            <Form.Check type="checkbox" checked={completed} onChange={() => editTodo({
-                text,
-                completed: !completed,
-                id
-            })}/>
-            <h5 className="mb-0">{editMode ?
-                <Form.Control plaintext defaultValue={text} onChange={(e) => editTodo({
-                    text: e.target.value,
-                    completed,
-                    id
-                })}/>
-                : text}</h5>
-            <Button className="ms-auto me-3" variant="outline-primary" size="sm" onClick={() => setEditMode(true)}>
-                <PencilIcon/>
-            </Button>
-            <Button variant="danger" size="sm" onClick={() => deleteTodo(id)}>
-                <TrashIcon/>
-            </Button>
-        </div>
-    </ListGroup.Item>
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.key === 'Enter') setEditMode(false)
+    }
+
+    return <div ref={listItemRef} className="d-flex align-items-end">
+        <Form.Check
+            type="checkbox"
+            checked={completed}
+            onChange={() => handleCompleted()}
+        />
+        <h5 className={`ms-3 mb-0 ${completed && 'text-decoration-line-through text-muted'}`}>{editMode
+            ? <Form.Control
+                className="p-0 border-0 bg-primary text-white rounded ps-2"
+                plaintext
+                defaultValue={title}
+                autoFocus
+                onChange={(e) => handleTextUpdate(e.target.value)}
+                onKeyUp={(e) => handleKeyPress(e)}
+            />
+            : title}</h5>
+        <Button
+            className="ms-auto me-3"
+            variant="outline-primary"
+            size="sm"
+            onClick={() => setEditMode(true)}
+        >
+            <PencilIcon/>
+        </Button>
+        <Button
+            variant="danger"
+            size="sm"
+            onClick={() => deleteTodo(id)}
+        >
+            <TrashIcon/>
+        </Button>
+    </div>
 }
 
 export default TodoItem
