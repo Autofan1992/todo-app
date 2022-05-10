@@ -2,7 +2,6 @@ import { TodoFilterTypes, TodoType } from '../../types/types'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Button, ListGroup, Stack } from 'react-bootstrap'
 import './App.scss'
-import { AnimatePresence } from 'framer-motion'
 import TodoItemContainer from '../TodoItem/TodoItemContainer'
 import TodoForm from '../TodoForm/TodoForm'
 import ErrorToast from '../common/ErrorModal/ErrorToast'
@@ -14,34 +13,43 @@ type PropsType = {
 }
 
 const App: FC<PropsType> = ({ todos, filterTodos }) => {
-    const { activeTodosCount, completedTodosCount } = useTodos()
+    const { activeTodosCount, completedTodosCount, toggleAllTodos, allCompleted } = useTodos()
 
     return <div className="wrapper d-flex flex-column justify-content-center">
         <div className="container">
             <ErrorToast/>
             <TodoForm/>
             <ListGroup className="my-4">
-                <AnimatePresence>
-                    {todos.length
-                        ? todos.map(todo => <div
-                            className="list-group-item"
-                            key={todo.id}
-                        >
-                            <TodoItemContainer
-                                id={todo.id}
-                                title={todo.title}
-                                completed={todo.completed}
-                            />
-                        </div>)
-                        : (activeTodosCount && !completedTodosCount)
-                            ? <h2 className="text-center">There are no completed todos.</h2>
-                            : (!activeTodosCount && completedTodosCount)
-                                ? <h2 className="text-center">There are no active todos.</h2>
-                                : <h2 className="text-center">There are no todos. Time to add some!</h2>
-                    }
-                </AnimatePresence>
+                {todos.length > 0
+                    ? todos.map(todo => <div
+                        className="list-group-item"
+                        key={todo.id}
+                    >
+                        <TodoItemContainer
+                            id={todo.id}
+                            title={todo.title}
+                            completed={todo.completed}
+                        />
+                    </div>)
+                    : (activeTodosCount > 0 && !completedTodosCount)
+                        ? <h2 className="text-center">There are no completed todos.</h2>
+                        : (!activeTodosCount && completedTodosCount > 0)
+                            ? <h2 className="text-center">There are no active todos.</h2>
+                            : <h2 className="text-center">There are no todos. Time to add some!</h2>
+                }
             </ListGroup>
-            <Stack direction="horizontal">
+
+            {todos.length > 0 &&
+            <Stack direction="horizontal" className="justify-content-end mb-3">
+                <Button
+                    variant="outline-primary"
+                    onClick={() => toggleAllTodos()}
+                >Toggle all todos: {allCompleted ? 'completed' : 'active'}</Button>
+            </Stack>}
+
+            {activeTodosCount > 0 && <h3>Todos left: {activeTodosCount}</h3>}
+
+            <Stack direction="horizontal" className="mt-3">
                 <Button
                     variant="secondary"
                     onClick={() => filterTodos('ACTIVE_TODOS')}

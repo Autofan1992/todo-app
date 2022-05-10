@@ -11,7 +11,7 @@ export const useTodos = () => useContext(TodosContext)
 export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [todos, setTodos] = useLocalStorage<Array<TodoType>>('todos', [])
     const [error, setError] = useState(null as string | null)
-    const [allCompleted, setToggleAllTodos] = useState(false)
+    const [allCompleted, setToggleAllTodos] = useState(true)
 
     const addTodo = (title: string) => {
         setTodos(prevState => {
