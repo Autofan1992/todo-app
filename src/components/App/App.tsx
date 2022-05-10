@@ -4,7 +4,7 @@ import { Button, ListGroup, Stack } from 'react-bootstrap'
 import './App.scss'
 import TodoItemContainer from '../TodoItem/TodoItemContainer'
 import TodoForm from '../TodoForm/TodoForm'
-import ErrorToast from '../common/ErrorModal/ErrorToast'
+import ErrorToast from '../common/ErrorToast/ErrorToast'
 import { useTodos } from '../../context/todos-context'
 
 type PropsType = {

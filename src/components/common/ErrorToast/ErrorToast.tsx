@@ -17,7 +17,7 @@ const ErrorToast: FC = () => {
     }
 
     return (
-        <ToastContainer position="top-center" className="p-3 app-error-toast">
+        <ToastContainer position="middle-center" className="p-3 app-error-toast">
             <Toast className="app-error-toast" onClose={handleClose} show={show} delay={3000} autohide>
                 <Toast.Header className="justify-content-between">
                     <strong>Uuups!</strong>
