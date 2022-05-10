@@ -15,7 +15,7 @@ type PropsType = {
 const App: FC<PropsType> = ({ todos, filterTodos }) => {
     const { activeTodosCount, completedTodosCount, toggleAllTodos, allCompleted } = useTodos()
 
-    return <div className="wrapper py-3 py-md-4 d-flex flex-column justify-content-center">
+    return <div className="wrapper py-3 py-md-4 d-flex flex-column justify-content-md-center">
         <div className="container">
             <h1 className="mb-5">Todo App</h1>
             <ErrorToast/>
