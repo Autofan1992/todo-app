@@ -33,7 +33,7 @@ export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 if (!todos.find(todo => todo.title === title)) {
                     todo.title = title
                 } else if (todo.completed === completed) {
-                    setError('Todo with the same text already exists')
+                    setError('Todo with the same title already exists')
                 } else {
                     todo.completed = completed
                 }
