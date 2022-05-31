@@ -1,5 +1,5 @@
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useContext, useState } from 'react'
-import { TodoFilterTypes, TodoType } from '../types/types'
+import { TodoFilterTypes, TodoType } from '../types/todos-types'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { v4 as createId } from 'uuid'
 import { getActiveTodosCount, getCompletedTodosCount, getVisibleTodos } from '../selectors/todo-selectors'
@@ -11,7 +11,7 @@ export const useTodos = () => useContext(TodosContext)
 export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [todos, setTodos] = useLocalStorage<Array<TodoType>>('todos', [])
     const [error, setError] = useState(null as string | null)
-    const [allCompleted, setToggleAllTodos] = useState(true)
+    const [allCompleted, setAllCompleted] = useState(false)
 
     const addTodo = (title: string) => {
         setTodos(prevState => {
@@ -47,9 +47,9 @@ export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const deleteAllCompletedTodos = () => setTodos(prevState => prevState.filter(todo => !todo.completed))
 
     const toggleAllTodos = () => {
-        setToggleAllTodos(!allCompleted)
+        setAllCompleted(!allCompleted)
         setTodos(prevState => prevState.map(todo => {
-            todo.completed = allCompleted
+            todo.completed = !allCompleted
             return todo
         }))
     }
@@ -64,6 +64,7 @@ export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
         toggleAllTodos,
         activeTodosCount,
         completedTodosCount,
+        setAllCompleted,
         error,
         setError
     }}>
@@ -83,4 +84,5 @@ type ContextType = {
     toggleAllTodos: () => void
     error: string | null
     setError: Dispatch<SetStateAction<string | null>>
+    setAllCompleted: Dispatch<SetStateAction<boolean>>;
 }

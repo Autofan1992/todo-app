@@ -1,4 +1,4 @@
-import { TodoType } from '../../types/types'
+import { TodoType } from '../../types/todos-types'
 import { Button, Form } from 'react-bootstrap'
 import PencilIcon from '../common/Icons/PencilIcon'
 import TrashIcon from '../common/Icons/TrashIcon'

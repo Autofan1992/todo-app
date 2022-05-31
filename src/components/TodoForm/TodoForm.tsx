@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTodos } from '../../context/todos-context'
 import { Formik } from 'formik'
-import { TodoType } from '../../types/types'
+import { TodoType } from '../../types/todos-types'
 import * as Yup from 'yup'
 import { Button, Form, Stack } from 'react-bootstrap'
 

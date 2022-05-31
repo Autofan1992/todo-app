@@ -1,4 +1,4 @@
-import { TodoType } from '../../types/types'
+import { TodoType } from '../../types/todos-types'
 import { useTodos } from '../../context/todos-context'
 import { useRef, useState } from 'react'
 import useOutsideClick from '../../hooks/useOutsideClick'

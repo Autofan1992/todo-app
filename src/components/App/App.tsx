@@ -1,4 +1,4 @@
-import { TodoFilterTypes, TodoType } from '../../types/types'
+import { TodoFilterTypes, TodoType } from '../../types/todos-types'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Button, ListGroup, Stack } from 'react-bootstrap'
 import './App.scss'
@@ -45,7 +45,7 @@ const App: FC<PropsType> = ({ todos, filterTodos }) => {
                     <Button
                         variant="outline-primary"
                         onClick={() => toggleAllTodos()}
-                    >Toggle all todos: {allCompleted ? 'completed' : 'active'}</Button>
+                    >Toggle all todos: {allCompleted ? 'active' : 'completed'}</Button>
                 </Stack>}
 
             {activeTodosCount > 0 && <h3>Todos left: {activeTodosCount}</h3>}

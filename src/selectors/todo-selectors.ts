@@ -1,4 +1,4 @@
-import { TodoFilterTypes, TodoType } from '../types/types'
+import { TodoFilterTypes, TodoType } from '../types/todos-types'
 
 export const getVisibleTodos = (filter: TodoFilterTypes, todos: Array<TodoType>) => {
     switch (filter) {
