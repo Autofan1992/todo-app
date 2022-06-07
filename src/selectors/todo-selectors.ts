@@ -1,6 +1,6 @@
 import { TodoFilterTypes, TodoType } from '../types/todos-types'
 
-export const getVisibleTodos = (filter: TodoFilterTypes, todos: Array<TodoType>) => {
+export const selectVisibleTodos = (filter: TodoFilterTypes, todos: Array<TodoType>) => {
     switch (filter) {
         case 'ALL_TODOS':
             return todos
@@ -11,6 +11,6 @@ export const getVisibleTodos = (filter: TodoFilterTypes, todos: Array<TodoType>)
     }
 }
 
-export const getActiveTodosCount = (todos: Array<TodoType>) => todos.filter(todo => !todo.completed).length
+export const selectActiveTodosCount = (todos: Array<TodoType>) => todos.filter(todo => !todo.completed).length
 
-export const getCompletedTodosCount = (todos: Array<TodoType>) => todos.filter(todo => todo.completed).length
+export const selectCompletedTodosCount = (todos: Array<TodoType>) => todos.filter(todo => todo.completed).length

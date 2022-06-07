@@ -2,7 +2,7 @@ import { createContext, Dispatch, FC, ReactNode, SetStateAction, useContext, use
 import { TodoFilterTypes, TodoType } from '../types/todos-types'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { v4 as createId } from 'uuid'
-import { getActiveTodosCount, getCompletedTodosCount, getVisibleTodos } from '../selectors/todo-selectors'
+import { selectActiveTodosCount, selectCompletedTodosCount, selectVisibleTodos } from '../selectors/todo-selectors'
 
 const TodosContext = createContext({} as ContextType)
 
@@ -23,9 +23,9 @@ export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
         })
     }
 
-    const filterTodos = (filter: TodoFilterTypes) => getVisibleTodos(filter, todos)
-    const activeTodosCount = getActiveTodosCount(todos)
-    const completedTodosCount = getCompletedTodosCount(todos)
+    const filterTodos = (filter: TodoFilterTypes) => selectVisibleTodos(filter, todos)
+    const activeTodosCount = selectActiveTodosCount(todos)
+    const completedTodosCount = selectCompletedTodosCount(todos)
 
     const editTodo = ({ title, completed, id }: TodoType) => {
         setTodos(prevState => prevState.map(todo => {
