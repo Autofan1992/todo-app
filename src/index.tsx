@@ -10,11 +10,9 @@ const root = ReactDOM.createRoot(
 )
 
 root.render(
-    <React.StrictMode>
-        <TodosProvider>
-            <AppContainer/>
-        </TodosProvider>
-    </React.StrictMode>
+    <TodosProvider>
+        <AppContainer />
+    </TodosProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

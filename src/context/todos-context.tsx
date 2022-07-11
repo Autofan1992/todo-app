@@ -4,6 +4,21 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import { v4 as createId } from 'uuid'
 import { selectActiveTodosCount, selectCompletedTodosCount, selectVisibleTodos } from '../selectors/todo-selectors'
 
+type ContextType = {
+    filterTodos: (filter: TodoFilterTypes) => Array<TodoType>
+    activeTodosCount: number
+    completedTodosCount: number
+    allCompleted: boolean
+    addTodo: (title: string) => void
+    editTodo: ({ title, completed, id }: TodoType) => void
+    deleteTodo: (id: string) => void
+    deleteAllCompletedTodos: () => void
+    toggleAllTodos: () => void
+    error: string | null
+    setError: Dispatch<SetStateAction<string | null>>
+    setAllCompleted: Dispatch<SetStateAction<boolean>>;
+}
+
 const TodosContext = createContext({} as ContextType)
 
 export const useTodos = () => useContext(TodosContext)
@@ -70,19 +85,4 @@ export const TodosProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }}>
         {children}
     </TodosContext.Provider>
-}
-
-type ContextType = {
-    filterTodos: (filter: TodoFilterTypes) => Array<TodoType>
-    activeTodosCount: number
-    completedTodosCount: number
-    allCompleted: boolean
-    addTodo: (title: string) => void
-    editTodo: ({ title, completed, id }: TodoType) => void
-    deleteTodo: (id: string) => void
-    deleteAllCompletedTodos: () => void
-    toggleAllTodos: () => void
-    error: string | null
-    setError: Dispatch<SetStateAction<string | null>>
-    setAllCompleted: Dispatch<SetStateAction<boolean>>;
 }
